@@ -5,50 +5,43 @@ namespace Net01_1.Materials
 {
     class VideoMaterial : TrainingMaterial, IVersionable
     {
-        string uriVideo;
-        string uriPicture;
-        VideoFormat videoFormat;
-        byte[] version = new byte[8];
+        const byte MAX_VERSION_LENGTH = 8;
+        const byte START_COPY_FROM_INDEX = 0;
+        string _uriVideo;
+        string _uriPicture;
+        VideoFormat _videoFormat;
+        byte[] _version = new byte[MAX_VERSION_LENGTH];
 
         public VideoMaterial(string uriVideo, string uriPicture, VideoFormat videoFormat)
         {
-            this.uriPicture = uriPicture;
-            this.videoFormat = videoFormat;
+            _uriPicture = uriPicture;
+            _videoFormat = videoFormat;
 
             if (uriVideo != null)
             {
-                this.uriVideo = uriVideo;
+                _uriVideo = uriVideo;
             }
             else
             {
-                Console.WriteLine("Video URI can't be null!");
+                throw new ArgumentNullException("Video URI can't be null!");
             }
         }
 
         public void SetVersion(byte[] version)
         {
-            if (version != null)
+            if (version.Length <= _version.Length)
             {
-                this.version = new byte[8];
-
-                for (int i = 0; i < version.Length; i++)
-                {
-                    if (i < this.version.Length)
-                    {
-                        this.version[i] = version[i];
-                    }
-                    else
-                    {
-                        Console.WriteLine("Maximum version size exceeded!");
-                        break;
-                    }
-                }
+                version.CopyTo(_version, START_COPY_FROM_INDEX);
+            }
+            else
+            {
+                throw new ArgumentException("Maximum version size exceeded.");
             }
         }
 
         public byte[] GetVersion()
         {
-            return version;
+            return _version;
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Net01_1
         static void Main(string[] args)
         {
             string text = "Text";
-            StringBuilder desc = new StringBuilder("Description of trainingLesson");
+            string desc = "Description of trainingLesson";
 
             TextMaterial textMaterial = new TextMaterial(text);
             TrainingLesson trainingLesson = new TrainingLesson();

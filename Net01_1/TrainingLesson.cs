@@ -6,31 +6,29 @@ namespace Net01_1
 {
     class TrainingLesson : TrainingBase, IVersionable, ICloneable
     {
+        const byte MAX_VERSION_LENGTH = 8;
+        const int MAX_MATERIALS_LENGTH = 10;
+        const byte START_COPY_FROM_INDEX = 0;
+        TrainingMaterial[] _materials = new TrainingMaterial[MAX_MATERIALS_LENGTH];
+        byte[] _version = new byte[MAX_VERSION_LENGTH];
 
-        const int MAX_MATERIALS_ARRAY_LENGTH = 10;
-        TrainingMaterial[] materials;
-        byte[] version;
-
-        public TrainingLesson()
-        {
-            materials = new TrainingMaterial[MAX_MATERIALS_ARRAY_LENGTH];
-        }
+        public TrainingLesson() { }
 
         public TrainingLesson(TrainingMaterial[] materials, byte[] version = null, byte[] id = null) : base(id)
         {
-            this.materials = materials;
-            this.version = version;
+            materials.CopyTo(_materials, START_COPY_FROM_INDEX);
+            _version = version;
         }
 
         public void AddMaterial(TrainingMaterial addMaterial)
         {
             try
             {
-                for (int i = 0; i < materials.Length; i++)
+                for (int i = 0; i < _materials.Length; i++)
                 {
-                    if (materials[i] == null)
+                    if (_materials[i] == null)
                     {
-                        materials[i] = addMaterial;
+                        _materials[i] = addMaterial;
                         break;
                     }
                 }
@@ -45,9 +43,9 @@ namespace Net01_1
         {
             TypeLesson typeLesson = TypeLesson.TextLesson;
 
-            for (int i = 0; i < materials.Length; i++)
+            for (int i = 0; i < _materials.Length; i++)
             {
-                if (materials[i] is VideoMaterial)
+                if (_materials[i] is VideoMaterial)
                 {
                     typeLesson = TypeLesson.VideoLesson;
                     break;
@@ -59,33 +57,32 @@ namespace Net01_1
 
         public void SetVersion(byte[] version)
         {
-            if (version != null)
+            if (version.Length <= _version.Length)
             {
-                this.version = new byte[8];
-
-                for (int i = 0; i < version.Length; i++)
-                {
-                    if (i < this.version.Length)
-                    {
-                        this.version[i] = version[i];
-                    }
-                    else
-                    {
-                        Console.WriteLine("Maximum version size exceeded!");
-                        break;
-                    }
-                }
+                version.CopyTo(_version, START_COPY_FROM_INDEX);
+            }
+            else
+            {
+                throw new ArgumentException("Maximum version size exceeded.");
             }
         }
 
         public byte[] GetVersion()
         {
-            return version;
+            return _version;
         }
 
         public object Clone()
         {
-            return new TrainingLesson(materials, version, Id);
+            TrainingMaterial[] materials = new TrainingMaterial[MAX_MATERIALS_LENGTH];
+            byte[] version = new byte[MAX_VERSION_LENGTH];
+            byte[] id = new byte[Id.Length];
+
+            _materials.CopyTo(materials, START_COPY_FROM_INDEX);
+            _version.CopyTo(version, START_COPY_FROM_INDEX);
+            Id.CopyTo(id, START_COPY_FROM_INDEX);
+
+            return new TrainingLesson(materials, version, id);
         }
     }
 }

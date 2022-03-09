@@ -5,20 +5,20 @@ namespace Net01_1.Materials
 {
     class LinkMaterial : TrainingMaterial
     {
-        string uriContent;
-        TypeLink typeLink;
+        string _uriContent;
+        TypeLink _typeLink;
 
         public LinkMaterial(string uriContent, TypeLink typeLink)
         {
-            this.typeLink = typeLink;
+            _typeLink = typeLink;
 
             if (uriContent != null)
             {
-                this.uriContent = uriContent;
+                _uriContent = uriContent;
             }
             else
             {
-                Console.WriteLine("Content URI can't be null!");
+                throw new ArgumentNullException("Content URI can't be null!");
             }
         }
     }

@@ -4,18 +4,35 @@ using System.Text;
 namespace Net01_1.Materials
 {
     class TextMaterial : TrainingMaterial
-    {
-        StringBuilder text = new StringBuilder(0,100000);
+    {        
+        const int MAX_TEXT_LENGTH = 10000;
+        string _text;
+
+        public string Text
+        {
+            get { return _text; }
+            set
+            {
+                if (value.Length <= MAX_TEXT_LENGTH)
+                {
+                    _text = value;
+                }
+                else
+                {
+                    throw new ArgumentOutOfRangeException("Invalid text length.");
+                }
+            }
+        }
 
         public TextMaterial(string text)
         {
             if (text != null)
             {
-                this.text.Append(text);
+                Text = text;
             }
             else
             {
-                Console.WriteLine("Text can't be null!");
+                throw new ArgumentNullException("Text can't be null!");
             }
         }
     }

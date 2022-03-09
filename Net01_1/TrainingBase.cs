@@ -1,45 +1,46 @@
 ﻿using System;
-using System.Text;
 
 namespace Net01_1
 {
     public abstract class TrainingBase
     {
-        readonly byte[] id;
-        StringBuilder description = null;
+        const int MAX_DESC_LENGTH = 256;
+        readonly byte[] _id;
+        string _description;
 
-        public byte[] Id
+        public string Description
         {
-            get { return id; }
-        }
-
-        public StringBuilder Description
-        {
-            get { return description; }
+            get { return _description; }
             set
             {
-                try
+                if (value.Length <= MAX_DESC_LENGTH)
                 {
-                        description = new StringBuilder(0, 256);
-                        description.Append(value);
+                    _description = value;
                 }
-                catch (ArgumentOutOfRangeException)
+                else
                 {
-                    Console.WriteLine("Number of allowed characters exceeded!");
+                    throw new ArgumentOutOfRangeException("Invalid description length.");
                 }
             }
         }
 
+        public byte[] Id
+        {
+            get { return _id; }
+        }
+
+
+
         public TrainingBase(byte[] id = null)
         {
-            this.id = id ?? Guid.NewGuid().ToByteArray();
+            _id = id ?? Guid.NewGuid().ToByteArray();
         }
 
         public override string ToString()
         {
-            if (description != null)
+            if (_description != null)
             {
-                return description.ToString();
+                return _description;
             }
             else
             {
@@ -49,9 +50,52 @@ namespace Net01_1
 
         public override bool Equals(Object obj)
         {
-            TrainingBase idGenerator = (TrainingBase)obj;
+            TrainingBase trainingBase = obj as TrainingBase;
 
-            return id == idGenerator.id;
+            if (trainingBase != null)
+            {
+                return IsEqualsId(_id, trainingBase.Id);
+            }
+            else
+            {
+                throw new InvalidCastException();
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
+
+        private bool IsEqualsId(byte[] arrayA, byte[] arrayB)
+        {
+            bool flag = false;
+
+            if (arrayA.Length == arrayB.Length)
+            {
+                for (int i = 0; i < arrayA.Length; i++)
+                {
+                    if (arrayA[i] == (arrayB[i]))
+                    {
+                        if (i == arrayA.Length - 1)
+                        {
+                            flag = true;
+                        }
+                        continue;
+                    }
+                    else
+                    {
+                        flag = false;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                flag = false;
+            }
+
+            return flag;
         }
     }
 }

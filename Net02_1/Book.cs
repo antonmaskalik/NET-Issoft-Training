@@ -74,7 +74,7 @@ namespace Net02_1
             }
             else
             {
-                throw new InvalidCastException();
+                return false;
             }
         }
 

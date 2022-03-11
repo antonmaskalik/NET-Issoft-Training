@@ -22,9 +22,9 @@ namespace Net02_1
                         
             Console.WriteLine(book1.Equals(book3));
 
-            catalog.Add(book2, book2.Isbn);                       
-            catalog.Add(book3, book3.Isbn);
-            catalog.Add(book1, book1.Isbn);
+            catalog.Add(book2);                       
+            catalog.Add(book3);
+            catalog.Add(book1);
 
             foreach (var book in catalog)
             {

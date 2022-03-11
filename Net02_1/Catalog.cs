@@ -7,18 +7,15 @@ namespace Net02_1
     internal class Catalog : IEnumerable
     {
         List<Book> _books;
-        List<string> _isbns;
 
         public Catalog()
         {
             _books = new List<Book>();
-            _isbns = new List<string>();
         }
 
-        public void Add(Book book, string isbn)
+        public void Add(Book book)
         {
             _books.Add(book);
-            _isbns.Add(isbn);
         }
 
         public IEnumerator GetEnumerator()

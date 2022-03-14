@@ -5,9 +5,27 @@ namespace Net01_2
     internal class SquareMatrix<T>
     {
         int _size;
-        protected T[] _array;
+        T[] _array;
 
-        public int Size { get { return _size; } }
+        protected int Size
+        {
+            get
+            {
+                return _size;
+            }
+        }
+
+        protected T[] Array
+        {
+            get
+            {
+                return _array;
+            }
+            set
+            {
+                _array = value;
+            }
+        }
 
         /// <summary>
         /// Creates a delegate to call an event handler.

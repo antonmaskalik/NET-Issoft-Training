@@ -13,7 +13,7 @@ namespace Net01_2
         /// </exception>
         public DiagonalMatrix(int size) : base(size)
         {
-            Array.Resize(ref _array, size);
+            Array = new T[size];
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace Net01_2
             {
                 if (i == j && i >= 0 && i < Size && j >= 0 && j < Size)
                 {
-                    return _array[i];
+                    return Array[i];
                 }
                 else
                 {
@@ -44,8 +44,8 @@ namespace Net01_2
             {
                 if (i == j && i >= 0 && i < Size && j >= 0 && j < Size)
                 {
-                    T initialValue = _array[i];
-                    _array[i] = value;
+                    T initialValue = Array[i];
+                    Array[i] = value;
 
                     NotifyEvent(i, j, initialValue);
                 }

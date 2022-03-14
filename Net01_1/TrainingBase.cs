@@ -48,7 +48,7 @@ namespace Net01_1
             }
         }
 
-        public override bool Equals(Object obj)
+        public override bool Equals(object obj)
         {
             TrainingBase trainingBase = obj as TrainingBase;
 
@@ -58,7 +58,7 @@ namespace Net01_1
             }
             else
             {
-                throw new InvalidCastException();
+                return false;
             }
         }
 
@@ -69,7 +69,7 @@ namespace Net01_1
 
         private bool IsEqualsId(byte[] arrayA, byte[] arrayB)
         {
-            bool flag = false;
+            bool _flag = false;
 
             if (arrayA.Length == arrayB.Length)
             {
@@ -79,23 +79,23 @@ namespace Net01_1
                     {
                         if (i == arrayA.Length - 1)
                         {
-                            flag = true;
+                            _flag = true;
                         }
                         continue;
                     }
                     else
                     {
-                        flag = false;
+                        _flag = false;
                         break;
                     }
                 }
             }
             else
             {
-                flag = false;
+                _flag = false;
             }
 
-            return flag;
+            return _flag;
         }
     }
 }

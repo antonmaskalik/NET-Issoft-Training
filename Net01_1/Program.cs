@@ -7,20 +7,20 @@ namespace Net01_1
 {
     internal class Program
     {
+        const string TEXT = "Text";
+        const string DESC = "Description of trainingLesson";
+        const string URI_VIDEO = "URI of video";
+        const string URI_PICTURE = "URI of picture";
+        const string URI_CONTENT = "URI of content";
         static void Main(string[] args)
         {
-            string text = "Text";
-            string desc = "Description of trainingLesson";
-
-            TextMaterial textMaterial = new TextMaterial(text);
+            TextMaterial textMaterial = new TextMaterial(TEXT);
             TrainingLesson trainingLesson = new TrainingLesson();
-            trainingLesson.Description = desc;
+            trainingLesson.Description = DESC;
 
-            string uriVideo = "URI of video";
-            string uriPicture = "URI of picture";
             byte[] version = new byte[] { 0, 1, 2, 3, 4, 5, 6, 7 };
             VideoFormat videoFormat = VideoFormat.Mp4;
-            VideoMaterial videoMaterial = new VideoMaterial(uriVideo, uriPicture, videoFormat);
+            VideoMaterial videoMaterial = new VideoMaterial(URI_VIDEO, URI_PICTURE, videoFormat);
 
             videoMaterial.SetVersion(version);
             Console.Write("Version video is ");
@@ -31,9 +31,8 @@ namespace Net01_1
 
             Console.WriteLine();
 
-            string uriContent = "URI of content";
             TypeLink typeLink = TypeLink.Html;
-            LinkMaterial linkMaterial = new LinkMaterial(uriContent, typeLink);
+            LinkMaterial linkMaterial = new LinkMaterial(URI_CONTENT, typeLink);
 
             trainingLesson.AddMaterial(textMaterial);
             trainingLesson.AddMaterial(videoMaterial);

@@ -6,8 +6,17 @@ namespace Net02_1
     [TestFixture]
     internal class Tests
     {
-        [TestCase("0123456789001", "Book1")]
-        [TestCase("012-3-45-678900-1", "Book1")]
+        const string ISBN_FORMAT_1 = "0123456789002";
+        const string ISBN_POSITIVE_FORMAT_1 = "0123456789001";
+        const string ISBN_POSITIVE_FORMAT_2 = "012-3-45-678900-1";
+        const string ISBN_NEGATIVE_FORMAT_1 = "0120-3-45-678900-1";
+        const string ISBN_NEGATIVE_FORMAT_2 = "AA-3-45-678900-1";
+        const string ISBN_NEGATIVE_FORMAT_3 = "AA112";
+        const string NAME_BOOK_1 = "Book1";
+        const string NAME_BOOK_2 = "Book2";
+
+        [TestCase(ISBN_POSITIVE_FORMAT_1, NAME_BOOK_1)]
+        [TestCase(ISBN_POSITIVE_FORMAT_2, NAME_BOOK_2)]
         public void IsbnPositiveTest(string isbn, string name)
         {
             Book book = new Book(isbn, name);
@@ -15,7 +24,7 @@ namespace Net02_1
             Assert.AreEqual(isbn, book.Isbn);
         }
 
-        [TestCase("0123456789001", "Book1", "012-3-45-678900-1", "Book2")]
+        [TestCase(ISBN_POSITIVE_FORMAT_1, NAME_BOOK_1, ISBN_POSITIVE_FORMAT_2, NAME_BOOK_2)]
         public void EqualPositiveTest(string isbn1, string name1, string isbn2, string name2)
         {
             bool _result = false;
@@ -28,9 +37,9 @@ namespace Net02_1
             Assert.IsTrue(_result);
         }
 
-        [TestCase("0120-3-45-678900-1", "Book1")]
-        [TestCase("AA-3-45-678900-1", "Book1")]
-        [TestCase("AA112", "Book1")]
+        [TestCase(ISBN_NEGATIVE_FORMAT_1, NAME_BOOK_1)]
+        [TestCase(ISBN_NEGATIVE_FORMAT_2, NAME_BOOK_1)]
+        [TestCase(ISBN_NEGATIVE_FORMAT_3, NAME_BOOK_1)]
         public void IsbnNegativeTest(string isbn, string name)
         {
             bool _result = false;
@@ -47,7 +56,7 @@ namespace Net02_1
             Assert.IsTrue(_result);
         }
 
-        [TestCase("0123456789001", "Book1", "012-3-45-678900-2", "Book2")]
+        [TestCase(ISBN_POSITIVE_FORMAT_1, NAME_BOOK_1, ISBN_FORMAT_1, NAME_BOOK_2)]
         public void EqualNegativeTest(string isbn1, string name1, string isbn2, string name2)
         {
             bool _result = false;

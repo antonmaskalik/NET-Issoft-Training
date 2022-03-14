@@ -5,19 +5,32 @@ namespace Net02_1
 {
     internal class Program
     {
+        const string FIRST_NAME_1 = "Jeffrey";
+        const string LAST_NAME_1 = "Richter";
+        const string FIRST_NAME_2 = "Jeffrey";
+        const string LAST_NAME_2 = "Richter";
+        const string ISBN_1 = "012-3-45-678900-1";
+        const string ISBN_2 = "0123456789002";
+        const string ISBN_3 = "0123456789003";
+        const string NAME_BOOK_1 = "Book1";
+        const string NAME_BOOK_2 = "Book2";
+        const string NAME_BOOK_3 = "Book3";
+        static DateTime _publicationDateBook1 = new DateTime(2004, 02, 23);
+        static DateTime _publicationDateBook2 = new DateTime(2001, 04, 20);
+        static DateTime _publicationDateBook3 = new DateTime(2010, 05, 11);
         static void Main(string[] args)
         {
-            Author author1 = new Author("Jeffrey","Richter");           
+            Author author1 = new Author(FIRST_NAME_1, LAST_NAME_1);           
             List<Author> authors1 = new List<Author>();
             authors1.Add(author1);
 
-            Author author2 = new Author("Stephen", "King");
+            Author author2 = new Author(FIRST_NAME_2, LAST_NAME_2);
             List<Author> authors2 = new List<Author>();
             authors2.Add(author2);
 
-            Book book1 = new Book("012-3-45-678900-1", "Book1", new DateTime(2004, 02, 23), authors2);
-            Book book2 = new Book("0123456789002", "Book2", new DateTime(2001, 04, 20), authors1);
-            Book book3 = new Book("0123456789003", "Book3", new DateTime(2010, 05, 11));
+            Book book1 = new Book(ISBN_1, NAME_BOOK_1, _publicationDateBook1, authors2);
+            Book book2 = new Book(ISBN_2, NAME_BOOK_2, _publicationDateBook2, authors1);
+            Book book3 = new Book(ISBN_3, NAME_BOOK_3, _publicationDateBook3);
             Catalog catalog = new Catalog();
                         
             Console.WriteLine(book1.Equals(book3));

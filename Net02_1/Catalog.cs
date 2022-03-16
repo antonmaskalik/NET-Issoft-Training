@@ -1,16 +1,36 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System;
+using System.Text.RegularExpressions;
 
 namespace Net02_1
 {
     internal class Catalog : IEnumerable
     {
+        const string PATTERN = "^[0-9]{13}$";
+        const string TARGET = "";
+        Regex _regex = new Regex(@"\D");
         List<Book> _books;
 
         public Catalog()
         {
-            _books = new List<Book>();
+            if (_books == null)
+            {
+                _books = new List<Book>();
+            }
+        }
+
+        private List<Book> GetBooksWithAuthors()
+        {
+            return _books.Where(b => b.Authors != null).ToList();
+        }
+
+        private List<Author> GetAllAuthors()
+        {
+            List<Author> authors = GetBooksWithAuthors().SelectMany(b => b.Authors).Distinct().ToList();
+
+            return authors;
         }
 
         public void Add(Book book)
@@ -30,11 +50,11 @@ namespace Net02_1
 
         public List<Book> GetBooks(string firstName, string lastName)
         {
-            Author _aothor = GetBooksWithAuthors().SelectMany(b => b.Authors).ToList()
+            Author _author = GetBooksWithAuthors().SelectMany(b => b.Authors).ToList()
                 .Find(a => a.FirstName.ToUpper()
                 == firstName.ToUpper() && a.LastName.ToUpper() == lastName.ToUpper());
 
-            return GetBooksWithAuthors().FindAll(b => b.Authors.Contains(_aothor));
+            return GetBooksWithAuthors().FindAll(b => b.Authors.Contains(_author));
         }
 
         public List<Book> SortByDate()
@@ -42,26 +62,41 @@ namespace Net02_1
             return _books.OrderByDescending(b => b.PublicationDate).ToList();
         }
 
-        public Dictionary<Author, int> GetCountBooksOfAuthors()
+        public List<(Author, int)> GetCountBooksOfAuthors()
         {
             int _count = 0;
 
-            Dictionary<Author, int> _result = new Dictionary<Author, int>();
-            List<Author> _authors = GetBooksWithAuthors().SelectMany(b => b.Authors).Distinct().ToList();
+            List<(Author, int)> _tuplesCountBooks = new List<(Author, int)>();
 
-            foreach (Author author in _authors)
+            foreach (Author author in GetAllAuthors())
             {
                 _count = GetBooksWithAuthors().FindAll(b => b.Authors.Contains(author)).Count();
 
-                _result.Add(author, _count);
+                _tuplesCountBooks.Add((author, _count));
             }
 
-            return _result;
-        }
+            return _tuplesCountBooks;
+        }              
 
-        private List<Book> GetBooksWithAuthors()
+        public Book GetBook(string isbn)
         {
-            return _books.Where(b => b.Authors != null).ToList();
-        }
+            Book book = null;
+            string _isbn = isbn;
+
+            if (!Regex.IsMatch(isbn, PATTERN))
+            {
+                _isbn = _regex.Replace(isbn, TARGET);
+            }
+
+            foreach (Book b in _books)
+            {    
+                if (b.Isbn.Equals(_isbn))
+                {
+                    book = b;
+                }
+            }
+
+            return book ?? throw new ArgumentException("ISBN not found");
+        }        
     }
 }

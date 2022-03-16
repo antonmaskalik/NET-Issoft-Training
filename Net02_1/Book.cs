@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Text;
 
 namespace Net02_1
 {
     internal class Book : IComparable<Book>
     {
+        const int MAX_LENGTH = 1000;
         const string PATTERN = "^[0-9]{13}$|^[0-9]{3}-[0-9]{1}-[0-9]{2}-[0-9]{6}-[0-9]{1}$";
-        string _isbn;
-        string _target = "";
+        const string TARGET = "";
+        const string TEXT_AUTHORS = " Authors:";
+        const string TEXT_COMMA = ", ";
+        string _isbn;        
         Regex _regex = new Regex(@"\D");
         string _name;
         DateTime? _publicationDate;
@@ -21,7 +25,7 @@ namespace Net02_1
             {
                 if (Regex.IsMatch(value, PATTERN))
                 {
-                    _isbn = value;
+                    _isbn = _regex.Replace(value, TARGET);
                 }
                 else
                 {
@@ -36,7 +40,7 @@ namespace Net02_1
 
             set
             {
-                if (value.Length <= 1000)
+                if (value.Length <= MAX_LENGTH)
                 {
                     _name = value;
                 }
@@ -70,7 +74,7 @@ namespace Net02_1
 
             if (book != null)
             {
-                return book._regex.Replace(_isbn, _target).Equals(_regex.Replace(book.Isbn, _target));
+                return book._isbn.Equals(_isbn);
             }
             else
             {
@@ -95,17 +99,18 @@ namespace Net02_1
 
         public override string ToString()
         {
-            Author author1 = null;
+            StringBuilder authors = new StringBuilder(TEXT_AUTHORS);
 
             if (_authors != null)
             {
                 foreach (Author author in _authors)
                 {
-                    author1 = author;
+                    authors.Append(author);
+                    authors.Append(TEXT_COMMA);
                 }
             }
 
-            return "ISBN:" + Isbn + " Name:" + Isbn + " Date of publication:" + PublicationDate + " Authors:" + author1;
+            return "ISBN:" + Isbn + " Name:" + Isbn + " Date of publication:" + PublicationDate + " Authors:" + authors;
         }
     }
 }

@@ -19,9 +19,7 @@ namespace Net02_1
         [TestCase(ISBN_POSITIVE_FORMAT_2, NAME_BOOK_2)]
         public void IsbnPositiveTest(string isbn, string name)
         {
-            Book book = new Book(isbn, name);
-
-            Assert.AreEqual(isbn, book.Isbn);
+            Assert.DoesNotThrow(() => new Book(isbn, name));
         }
 
         [TestCase(ISBN_POSITIVE_FORMAT_1, NAME_BOOK_1, ISBN_POSITIVE_FORMAT_2, NAME_BOOK_2)]
@@ -36,24 +34,13 @@ namespace Net02_1
 
             Assert.IsTrue(_result);
         }
-
+        
         [TestCase(ISBN_NEGATIVE_FORMAT_1, NAME_BOOK_1)]
         [TestCase(ISBN_NEGATIVE_FORMAT_2, NAME_BOOK_1)]
         [TestCase(ISBN_NEGATIVE_FORMAT_3, NAME_BOOK_1)]
         public void IsbnNegativeTest(string isbn, string name)
         {
-            bool _result = false;
-
-            try
-            {
-                Book book = new Book(isbn, name);
-            }
-            catch(ArgumentException)
-            {
-                _result = true;
-            }
-
-            Assert.IsTrue(_result);
+            Assert.Throws<ArgumentException>(() => new Book(isbn, name));
         }
 
         [TestCase(ISBN_POSITIVE_FORMAT_1, NAME_BOOK_1, ISBN_FORMAT_1, NAME_BOOK_2)]

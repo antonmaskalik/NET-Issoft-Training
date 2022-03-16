@@ -4,6 +4,7 @@ namespace Net02_1
 {
     internal class Author
     {
+        const int MAX_LENGTH = 200;
         string _firstName;
         string _lastName;
 
@@ -12,7 +13,7 @@ namespace Net02_1
             get { return _firstName; }
             set
             {
-                if (value.Length <= 200)
+                if (value.Length <= MAX_LENGTH)
                 {
                     _firstName = value;
                 }
@@ -28,7 +29,7 @@ namespace Net02_1
             get { return _lastName; }
             set
             {
-                if (value.Length <= 200)
+                if (value.Length <= MAX_LENGTH)
                 {
                     _lastName = value;
                 }
@@ -48,6 +49,25 @@ namespace Net02_1
         public override string ToString()
         {
             return _firstName + " " + _lastName;
+        }
+
+        public override bool Equals(object obj)
+        {
+            Author author = obj as Author;
+
+            if (author != null)
+            {
+                return author.FirstName.Equals(FirstName) && author.LastName.Equals(LastName);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return _firstName.GetHashCode();
         }
     }
 }

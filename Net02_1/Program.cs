@@ -7,11 +7,11 @@ namespace Net02_1
     {
         const string FIRST_NAME_1 = "Jeffrey";
         const string LAST_NAME_1 = "Richter";
-        const string FIRST_NAME_2 = "Jeffrey";
-        const string LAST_NAME_2 = "Richter";
+        const string FIRST_NAME_2 = "Stephen ";
+        const string LAST_NAME_2 = "King";
         const string ISBN_1 = "012-3-45-678900-1";
         const string ISBN_2 = "0123456789002";
-        const string ISBN_3 = "0123456789003";
+        const string ISBN_3 = "0123456789001";
         const string NAME_BOOK_1 = "Book1";
         const string NAME_BOOK_2 = "Book2";
         const string NAME_BOOK_3 = "Book3";
@@ -27,6 +27,7 @@ namespace Net02_1
             Author author2 = new Author(FIRST_NAME_2, LAST_NAME_2);
             List<Author> authors2 = new List<Author>();
             authors2.Add(author2);
+            authors2.Add(author1);
 
             Book book1 = new Book(ISBN_1, NAME_BOOK_1, _publicationDateBook1, authors2);
             Book book2 = new Book(ISBN_2, NAME_BOOK_2, _publicationDateBook2, authors1);
@@ -64,6 +65,10 @@ namespace Net02_1
             {
                 Console.WriteLine(a);
             }
+
+            Console.WriteLine("");
+
+            Console.WriteLine(catalog.GetBook(ISBN_1));
         }
     }
 }

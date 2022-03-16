@@ -31,8 +31,8 @@ namespace Net01_2
         /// Creates a delegate to call an event handler.
         /// </summary>
         /// <param name="args">The Parameter keeping the state of the event.</param>    
-        public delegate void MatrixHandler(MatrixEventArgs<T> args);
-        public event MatrixHandler? MatrixChangeEvent;
+        public delegate void MatrixHandler<T>(MatrixEventArgs<T> args);
+        public event MatrixHandler<T>? MatrixChangeEvent;
 
         /// <summary>
         /// Sets size of matrix.
@@ -68,7 +68,7 @@ namespace Net01_2
         {
             get
             {
-                if (i >= 0 && i < _size && j >= 0 && j < _size)
+                if (AreParametersCorrect(i, j))
                 {
                     return _array[i * _size + j];
                 }
@@ -80,7 +80,7 @@ namespace Net01_2
 
             set
             {
-                if (i >= 0 && i < _size && j >= 0 && j < _size)
+                if (AreParametersCorrect(i, j))
                 {
                     T initialValue = _array[i * _size + j];
                     _array[i * _size + j] = value;
@@ -92,6 +92,11 @@ namespace Net01_2
                     throw new ArgumentException("Can not set element: Indexes of matrix are not correct.");
                 }
             }
+        }
+
+        private bool AreParametersCorrect(int i, int j)
+        {
+            return i >= 0 && i < _size && j >= 0 && j < _size;
         }
 
         /// <summary>

@@ -30,7 +30,7 @@ namespace Net01_2
         {
             get
             {
-                if (i == j && i >= 0 && i < Size && j >= 0 && j < Size)
+                if (AreParametersCorrect(i, j))
                 {
                     return Array[i];
                 }
@@ -42,7 +42,7 @@ namespace Net01_2
 
             set
             {
-                if (i == j && i >= 0 && i < Size && j >= 0 && j < Size)
+                if (AreParametersCorrect(i, j))
                 {
                     T initialValue = Array[i];
                     Array[i] = value;
@@ -54,6 +54,11 @@ namespace Net01_2
                     throw new ArgumentException("Can not set element: Indexes of matrix are not correct.");
                 }
             }
+        }
+
+        private bool AreParametersCorrect(int i, int j)
+        {
+            return i == j && i >= 0 && i < Size && j >= 0 && j < Size;
         }
     }
 }

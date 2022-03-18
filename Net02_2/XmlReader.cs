@@ -2,6 +2,7 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Xml.Linq;
+using System.Linq;
 
 namespace Net02_2
 {
@@ -90,28 +91,26 @@ namespace Net02_2
             }
         }
 
-        private string GetValueElement(string name, XElement element)
+        private int? GetValueElement(string name, XElement element)
         {
-            return element.Element(name)?.Value;
+            if (element.Element(name)?.Value != null)
+            {
+                return int.Parse(element.Element(name).Value);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         private List<LoginElement> GetIncorrectLogins()
         {
             List<LoginElement> loginElements = _loginElements ?? ReadConfigFile();
-            List<LoginElement> incorrectLogins = new List<LoginElement>();
 
-            foreach (LoginElement login in loginElements)
-            {
-                foreach (var element in login.WindowElements)
-                {
-                    if (!IsConfigCorrect(element))
-                    {
-                        incorrectLogins.Add(login);
-                    }
-                }
-            }
-
-            return incorrectLogins;
+            return (from login in loginElements
+                    from window in login.WindowElements
+                    where !IsConfigCorrect(window)
+                    select login).ToList();
         }
 
         public void PrintLogins(List<LoginElement> logins = null)
@@ -136,10 +135,10 @@ namespace Net02_2
 
             foreach (WindowElement windowElement in loginElement.WindowElements)
             {
-                top = windowElement.Top ?? QUESTION_MARK;
-                left = windowElement.Left ?? QUESTION_MARK;
-                width = windowElement.Width ?? QUESTION_MARK;
-                height = windowElement.Height ?? QUESTION_MARK;
+                top = CheckIfNull(windowElement.Top);
+                left = CheckIfNull(windowElement.Left);
+                width = CheckIfNull(windowElement.Width);
+                height = CheckIfNull(windowElement.Height);
 
                 if (windowElement.Title == MAIN_TITLE)
                 {
@@ -163,6 +162,18 @@ namespace Net02_2
         {
             List<LoginElement> incorrectLogins = GetIncorrectLogins();
             PrintLogins(incorrectLogins);
+        }
+
+        private string CheckIfNull(int? value)
+        {
+            if (value != null)
+            {
+                return value.ToString();
+            }
+            else
+            {
+                return QUESTION_MARK;
+            }
         }
     }
 }

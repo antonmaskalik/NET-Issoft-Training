@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Net02_2
 {
@@ -8,14 +9,14 @@ namespace Net02_2
     {
         const string JSON_FILE = "Config\\";
         const string STRING_FORMAT = "{0}{1}.json";
-        const string DEFAULT_TOP = "0";
-        const string DEFAULT_LEFT = "0";
-        const string DEFAULT_WIDTH = "400";
-        const string DEFAULT_HEIGHT = "150";
+        const int DEFAULT_TOP = 0;
+        const int DEFAULT_LEFT = 0;
+        const int DEFAULT_WIDTH = 400;
+        const int DEFAULT_HEIGHT = 150;
 
         string _pathToJsonFile = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName, JSON_FILE);
 
-        public async void ParseToJsonAsync(List<LoginElement> loginElements)
+        public async Task ParseToJsonAsync(List<LoginElement> loginElements)
         {
             string path;
             LoginElement loginElement;

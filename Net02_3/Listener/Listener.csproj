@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy /Y &quot;$(TargetDir)$(ProjectName).dll&quot; &quot;$(SolutionDir)Libraries\$(ProjectName).dll&quot;" />
+  </Target>
+
+  <ItemGroup>
+    <PackageReference Include="NLog" Version="4.7.15" />
+  </ItemGroup>
+
+</Project>

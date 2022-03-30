@@ -1,0 +1,6 @@
+2022-03-30 14:16:43.2047|Trace|Net02_3.LoggerManager|_value=Hello World
+2022-03-30 14:16:43.2268|Trace|Net02_3.LoggerManager|Value1=11
+2022-03-30 14:16:43.2268|Trace|Net02_3.LoggerManager|Value2=25
+2022-03-30 14:16:43.2371|Trace|Net02_3.LoggerManager|_value=Hello World
+2022-03-30 14:16:43.2371|Trace|Net02_3.LoggerManager|Value1=11
+2022-03-30 14:16:43.2371|Trace|Net02_3.LoggerManager|Value2=25
